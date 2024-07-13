@@ -1,6 +1,6 @@
 # Raspberry PI Pico W Playground
 
-# Requirements
+## Requirements
 - `cmake`
 - `gcc` 
 - `arm-gcc` tool-chain
