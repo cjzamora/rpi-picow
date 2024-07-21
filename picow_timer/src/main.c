@@ -20,7 +20,7 @@ const uint STEP_PIN = 15;
 const uint CLOCK_PIN = 16;
 
 // define frequency in Hz
-volatile int frequency = 5;
+volatile int frequency = 1;
 // define duty cycle in %
 volatile int duty_cycle = 50;
 
@@ -77,8 +77,14 @@ void start_adc() {
     while(true) {
         // read adc value
         uint16_t raw = adc_read();
-        // Map the raw value to the range 1-1000
-        frequency = (raw * 999 / 4095) + 1; // Adjusted formula
+        // map the raw value to the range 1-1000
+        int converted = (raw * 999 / 4095) + 1;
+
+        if (converted <= 5) {
+            frequency = 1;
+        } else {
+            frequency = converted;
+        }
 
         sleep_ms(1000);
     }
