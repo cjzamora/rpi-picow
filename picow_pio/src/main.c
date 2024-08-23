@@ -17,8 +17,6 @@ int main()
         return -1;
     }
 
-    sleep_ms(3000);
-
     // light up onboard LED
     cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
 
