@@ -6,8 +6,6 @@
 
 #define LED_PIN 0
 
-void blink_program_init(PIO pio, uint sm, uint offset, uint pin);
-
 int main() 
 {
     // initialize stdio
