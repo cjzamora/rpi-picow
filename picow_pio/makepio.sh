@@ -1,0 +1,1 @@
+$PICO_SDK_PATH/tools/pioasm/build/pioasm -o c-sdk src/blink.pio src/blink.pio.h
