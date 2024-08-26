@@ -1,0 +1,20 @@
+.program program
+
+loop:
+    set pins, 1 [31]
+    nop [31]
+    nop [31]
+    nop [31]
+    nop [31]
+    nop [31]
+    nop [31]
+    nop [31]
+    set pins, 0 [31]
+    nop [31]
+    nop [31]
+    nop [31]
+    nop [31]
+    nop [31]
+    nop [31]
+    nop [31]
+    jmp loop [31]

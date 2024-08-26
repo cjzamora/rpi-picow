@@ -18,7 +18,7 @@ pico_sdk_init()
 add_executable(
     ${PROJECT} 
     src/main.c
-    src/blink.pio.h
+    src/program.pio.h
 )
 
 # add target link libraries
