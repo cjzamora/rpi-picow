@@ -41,7 +41,7 @@ int main()
         // calculate our scaling factor using quadratic function
         // this allows us to generate values that are non-linear
         // but will still fit into the 16-bit PWM counter resolution
-        // and our buffer size of 255
+        // and our buffer size of 256
         float scale = 65535.0f / (255.0f * 255.0f);
         // calculate the fade value
         fade[i] = (uint32_t)(i * i * scale);
