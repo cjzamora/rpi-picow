@@ -31,7 +31,8 @@ int main()
     // initialize PWM
     pwm_init(slice_num, &config, true);
 
-    // holds the fade buffer
+    // holds the fade buffer, should be 32-bit aligned 
+    // since we are using 32-bit transfer size
     uint32_t fade[256];
     // fill the fade buffer
     for(int i = 0; i < 256; i++) {
@@ -53,7 +54,12 @@ int main()
     dma_channel_config dma_config = dma_channel_get_default_config(dma_channel);
     // set transfer data size to 32 bits
     channel_config_set_transfer_data_size(&dma_config, DMA_SIZE_32);
+    // set read increment to true, this will increment the read address after each transfer
+    // our read address will start from the fade buffer address and will increment by 4 bytes
+    // (32-bit) after each transfer. We need to enable this since we are reading from the fade buffer
     channel_config_set_read_increment(&dma_config, true);
+    // set write increment to false, this will keep the write address constant
+    // since we are writing to the PWM slice cc register, we don't need to increment the write address
     channel_config_set_write_increment(&dma_config, false);
     // transfer when PWM slice that is connected to LED_PIN ask for a new value
     channel_config_set_dreq(&dma_config, DREQ_PWM_WRAP0 + slice_num);
