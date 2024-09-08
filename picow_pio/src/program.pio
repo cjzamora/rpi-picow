@@ -1,20 +1,27 @@
 .program program
 
-loop:
-    set pins, 1 [31]
-    nop [31]
-    nop [31]
-    nop [31]
-    nop [31]
-    nop [31]
-    nop [31]
-    nop [31]
-    set pins, 0 [31]
-    nop [31]
-    nop [31]
-    nop [31]
-    nop [31]
-    nop [31]
-    nop [31]
-    nop [31]
-    jmp loop [31]
+; 962x2 delay cycles
+; 4 regular cycles
+; 962 x 2 + 4 = 1928 cycles
+; runs @ 2kHz
+; us per cycle = 1 / 2e3 = 0.5us
+; 1928 * 0.5us = 964us or 0.964 seconds total delay
+; if duty cycle is 50% then 0.482 ms on and 0.482 ms off
+; outputing at approx. 0.964 Hz since 1 second = 1 Hz
+
+.wrap_target
+    ; 1 cycle
+    set pins, 1
+    ; 1 cycle
+    set x, 31
+loop1:
+    ; 962 cycles
+    jmp x--, loop1 [31]
+    ; 1 cycle
+    set pins, 0
+    ; 1 cycle
+    set x, 31
+loop2:
+    ; 962 cycles
+    jmp x--, loop2 [31]
+.wrap

@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Cortex Debug",
+            "cwd": "${workspaceRoot}",
+            "executable": "${workspaceRoot}/build/picow_pio.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "device": "RP2040",
+            "configFiles": ["interface/cmsis-dap.cfg", "target/rp2040.cfg"],
+            "searchDir": [
+                "${workspaceRoot}",
+                "${env:OPENOCD_PATH}/tcl"
+            ],
+            "svdFile": "${env:PICO_SDK_PATH}/src/rp2040/hardware_regs/RP2040.svd",
+            "showDevDebugOutput": "raw"
+        }
+    ]
+}

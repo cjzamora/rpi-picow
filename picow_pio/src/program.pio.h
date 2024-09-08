@@ -13,35 +13,24 @@
 // ------- //
 
 #define program_wrap_target 0
-#define program_wrap 16
+#define program_wrap 5
 #define program_pio_version 0
 
 static const uint16_t program_program_instructions[] = {
             //     .wrap_target
-    0xff01, //  0: set    pins, 1                [31]
-    0xbf42, //  1: nop                           [31]
-    0xbf42, //  2: nop                           [31]
-    0xbf42, //  3: nop                           [31]
-    0xbf42, //  4: nop                           [31]
-    0xbf42, //  5: nop                           [31]
-    0xbf42, //  6: nop                           [31]
-    0xbf42, //  7: nop                           [31]
-    0xff00, //  8: set    pins, 0                [31]
-    0xbf42, //  9: nop                           [31]
-    0xbf42, // 10: nop                           [31]
-    0xbf42, // 11: nop                           [31]
-    0xbf42, // 12: nop                           [31]
-    0xbf42, // 13: nop                           [31]
-    0xbf42, // 14: nop                           [31]
-    0xbf42, // 15: nop                           [31]
-    0x1f00, // 16: jmp    0                      [31]
+    0xe001, //  0: set    pins, 1                    
+    0xe03f, //  1: set    x, 31                      
+    0x1e42, //  2: jmp    x--, 2                 [30]
+    0xe000, //  3: set    pins, 0                    
+    0xe03f, //  4: set    x, 31                      
+    0x1e45, //  5: jmp    x--, 5                 [30]
             //     .wrap
 };
 
 #if !PICO_NO_HARDWARE
 static const struct pio_program program_program = {
     .instructions = program_program_instructions,
-    .length = 17,
+    .length = 6,
     .origin = -1,
     .pio_version = 0,
 #if PICO_PIO_VERSION > 0
