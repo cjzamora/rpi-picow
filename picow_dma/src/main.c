@@ -17,8 +17,6 @@ int main()
         return -1;
     }
 
-    sleep_ms(2000);
-
     // initialize led pin to use PWM
     gpio_set_function(LED_PIN, GPIO_FUNC_PWM);
 
@@ -64,17 +62,23 @@ int main()
     // transfer when PWM slice that is connected to LED_PIN ask for a new value
     channel_config_set_dreq(&dma_config, DREQ_PWM_WRAP0 + slice_num);
 
-    // set the dma channel config
-    dma_channel_configure(
-        dma_channel, // channel
-        &dma_config, // config
-        &pwm_hw->slice[slice_num].cc, // Write directly to PWM cc register (cc = counter compare)
-        fade, // src
-        256, // transfer count
-        true // start immediately
-    );
-
     while (true) {
+        // reset dma channel every 256 transfers
+        if (dma_channel_is_busy(dma_channel)) {
+            dma_channel_wait_for_finish_blocking(dma_channel);
+        }
+
+        // reset the dma channel
+        dma_channel_configure(
+            dma_channel, // channel
+            &dma_config, // config
+            &pwm_hw->slice[slice_num].cc, // Write directly to PWM cc register (cc = counter compare)
+            fade, // src
+            256, // transfer count
+            true // start immediately
+        );
+
+        sleep_ms(3000);
         tight_loop_contents();
     }
 
