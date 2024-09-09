@@ -209,7 +209,6 @@ int main()
     dma_handler();
 
     while (true) {
-        sleep_ms(500);
         tight_loop_contents();
     }
 
