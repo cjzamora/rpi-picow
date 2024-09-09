@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 # set project name
-set(PROJECT picow_pio)
+set(PROJECT picow_dma_pio)
 # set pico board
 set(PICO_BOARD pico_w)
 
@@ -21,13 +21,15 @@ add_executable(
 )
 
 # compile the program.pio file
-pico_generate_pio_header(${PROJECT} ${CMAKE_CURRENT_LIST_DIR}/src/program.pio)
+pico_generate_pio_header(${PROJECT} ${CMAKE_CURRENT_LIST_DIR}/src/dma_pio.pio)
 
 # add target link libraries
 target_link_libraries(
     ${PROJECT}
     pico_stdlib
     pico_cyw43_arch_none
+    hardware_dma
+    hardware_irq
     hardware_pio
 )
 

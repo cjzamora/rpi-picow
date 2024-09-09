@@ -1,19 +1,10 @@
-#include <math.h>
 #include "pico/stdlib.h"
 #include "pico/cyw43_arch.h"
-#include "hardware/clocks.h"
-#include "hardware/gpio.h"
 #include "hardware/pio.h"
 #include "program.pio.h"
 
 #define LED_PIN 16
 #define LED2_PIN 17
-
-volatile int counter = 0;
-
-void gpio_callback(uint gpio, uint32_t events) {
-    counter++;
-}
 
 int main() 
 {
@@ -32,7 +23,6 @@ int main()
 
     gpio_init(LED2_PIN);
     gpio_set_dir(LED2_PIN, GPIO_IN);
-    gpio_set_irq_enabled_with_callback(LED2_PIN, GPIO_IRQ_EDGE_RISE | GPIO_IRQ_EDGE_FALL, true, &gpio_callback);
 
     // use pio 0 (there are two pio blocks on the RP2040)
     PIO pio = pio0;
@@ -61,10 +51,7 @@ int main()
     pio_sm_set_enabled(pio, sm, true);
 
     while (true) {
-        printf("\033[2J\033[1;1H");
-        printf("freq: %d\n", counter);
-        counter = 0;
-        sleep_ms(1000);
+        tight_loop_contents();
     }
 
     return 0;

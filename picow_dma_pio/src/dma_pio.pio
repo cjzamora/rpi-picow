@@ -1,0 +1,7 @@
+.program dma_pio
+
+; Serialize a stream of bits. Take 32 bits from each FIFO record. LSB-first.
+
+.wrap_target
+    out pins, 1
+.wrap

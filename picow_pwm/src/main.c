@@ -1,4 +1,14 @@
-#include <math.h>
+/**
+ * @brief This example demonstrates how PWM and DMA works together
+ * 
+ * DMA: we are using the DMA to transfer data from the fade buffer
+ * to the PWM slice's CC register. The DMA will increment the read
+ * address after each transfer.
+ * 
+ * PWM: we are using the PWM to fade the LED. The PWM will read the
+ * CC register value and set the duty cycle accordingly.
+ */
+
 #include "pico/stdlib.h"
 #include "pico/cyw43_arch.h"
 #include "hardware/pwm.h"
