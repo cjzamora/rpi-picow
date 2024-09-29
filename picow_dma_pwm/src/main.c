@@ -66,6 +66,8 @@ int main() {
         led_pwm_slice_num[i] = pwm_gpio_to_slice_num(i);
     }
 
+    sleep_ms(2000);
+
     // get default PWM config
     pwm_config config = pwm_get_default_config();
     // set pwm clock divider
@@ -92,17 +94,26 @@ int main() {
     uint32_t fade_b[512] __attribute__((aligned(2048)));
 
     // fill the wavetables
-    for(int i = 0; i <= 256; i ++) {
-        // loads the LSBs of the first half with increasing values
-        fade_a[i] = i * i;
-        // loads the LSBs of the second half with decreasing values
-        fade_a[512 - i] = i * i;
+    for(int i = 0; i <= 256; i++) {
+        uint32_t fade = i * i;
+
+        // make sure fade does not exceed 65535
+        fade = fade > 65535 ? 65535 : fade;
 
         // loads the LSBs of the first half with increasing values
-        fade_b[i] = (i * i) << 16;
+        fade_a[i] = fade;
         // loads the LSBs of the second half with decreasing values
-        fade_b[512 - i] = (i * i) << 16;
+        fade_a[512 - i] = fade;
+
+        // loads the LSBs of the first half with increasing values
+        fade_b[i] = fade << 16u;
+        // loads the LSBs of the second half with decreasing values
+        fade_b[512 - i] = fade << 16u;
     }
+
+    // make sure last element is 0
+    fade_a[511] = 0;
+    fade_b[511] = 0;
 
     // set PWM compare counter address locations
     // for each of the PWM slices.
