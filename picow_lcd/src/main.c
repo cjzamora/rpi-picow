@@ -21,8 +21,7 @@ void pulse_enable();
  * 
  * @return void
  */
-void lcd_init() 
-{
+void lcd_init() {
     // Initialize GPIO pins
     gpio_init(RS);
     gpio_init(E);
@@ -62,8 +61,7 @@ void lcd_init()
  * @param uint8_t command
  * @return void
  */
-void lcd_send_command(uint8_t command) 
-{
+void lcd_send_command(uint8_t command) {
     gpio_put(RS, 0);  // Command mode
     lcd_send_data(command);
 }
@@ -74,8 +72,7 @@ void lcd_send_command(uint8_t command)
  * @param uint8_t data
  * @return void
  */
-void lcd_send_data(uint8_t data) 
-{
+void lcd_send_data(uint8_t data) {
     gpio_put(D4, (data >> 4) & 0x01);
     gpio_put(D5, (data >> 4) & 0x02);
     gpio_put(D6, (data >> 4) & 0x04);
@@ -94,8 +91,7 @@ void lcd_send_data(uint8_t data)
  * 
  * @return void
  */
-void lcd_clear()
-{
+void lcd_clear() {
     lcd_send_command(0x01);
     sleep_ms(2);
 }
@@ -107,8 +103,7 @@ void lcd_clear()
  * @param uint8_t col
  * @return void
  */
-void lcd_set_cursor(uint8_t row, uint8_t col) 
-{
+void lcd_set_cursor(uint8_t row, uint8_t col) {
     uint8_t address = (row == 0) ? col : col + 0x40;
     lcd_send_command(0x80 | address);
 }
@@ -119,8 +114,7 @@ void lcd_set_cursor(uint8_t row, uint8_t col)
  * @param const char *str
  * @return void
  */
-void lcd_print(const char *str) 
-{
+void lcd_print(const char *str) {
     while (*str) {
         gpio_put(RS, 1);  // Data mode
         lcd_send_data(*str++);
@@ -132,16 +126,14 @@ void lcd_print(const char *str)
  * 
  * @return void
  */
-void pulse_enable()
-{
+void pulse_enable() {
     gpio_put(E, 1);
     sleep_us(1);
     gpio_put(E, 0);
     sleep_us(100);
 }
 
-int main() 
-{
+int main() {
     // initialize stdio
     stdio_init_all();
 

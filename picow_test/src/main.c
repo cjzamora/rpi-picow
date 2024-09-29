@@ -12,8 +12,7 @@
  * @param freq frequency in Hz
  * @return frequency in kHz, MHz or Hz
  */
-char* to_freq(u_int32_t freq)
-{
+char* to_freq(u_int32_t freq) {
     static char str[10];
     if (freq >= 1000 && freq <= 1000000) {
         snprintf(str, sizeof(str), "%ld kHz", freq / 1000);
@@ -31,8 +30,7 @@ char* to_freq(u_int32_t freq)
  * 
  * @return void
  */
-void run_pwm()
-{
+void run_pwm() {
     // get sys clock as base
     u_int32_t sys_clk = clock_get_hz(clk_sys);
     // target frequency
@@ -84,8 +82,7 @@ void run_pwm()
  * 
  * @return void
  */
-void run_pio()
-{
+void run_pio() {
     // get sys clock as base
     u_int32_t sys_clk = clock_get_hz(clk_sys);
     // target divider
@@ -120,8 +117,7 @@ void run_pio()
     }
 }
 
-int main() 
-{
+int main() {
     // initialize stdio
     stdio_init_all();
 

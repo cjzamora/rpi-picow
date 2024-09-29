@@ -6,8 +6,7 @@
 #define LED_PIN 16
 #define LED2_PIN 17
 
-int main() 
-{
+int main() {
     // initialize stdio
     stdio_init_all();
 

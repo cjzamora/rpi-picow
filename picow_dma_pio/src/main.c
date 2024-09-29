@@ -48,8 +48,7 @@ int dma_channel;
  * 
  * @return void
  */
-void dma_pio_program_init(PIO pio, uint sm, uint offset, uint pin, float clk_div)
-{
+void dma_pio_program_init(PIO pio, uint sm, uint offset, uint pin, float clk_div) {
     // initialize led pin to use PIO
     pio_gpio_init(pio, pin);
     // set the direction of the pin to output
@@ -92,8 +91,7 @@ void dma_pio_program_init(PIO pio, uint sm, uint offset, uint pin, float clk_div
  * 
  * @return void
  */
-void dma_handler()
-{
+void dma_handler() {
     // pwm level index
     static int pwm_level = 0;
     // wavetable data from lowest to highest
@@ -156,8 +154,7 @@ void dma_handler()
     pwm_level = (pwm_level + 1) % PWM_LEVELS;
 }
 
-int main() 
-{
+int main() {
     // initialize stdio
     stdio_init_all();
 
